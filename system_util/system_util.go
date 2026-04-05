@@ -108,8 +108,8 @@ func BuildDashboardData() (DashboardData, error) {
 					},
 					{
 						ID:    "hardDrive-used-percent",
-						Label: "Hard Drive percent",
-						Value: fmt.Sprintf("%d MB", hardDriveInfo.UsedPercent),
+						Label: "Hard Drive percent used",
+						Value: fmt.Sprintf("%2.f%%", hardDriveInfo.UsedPercent),
 						Color: "warning",
 					},
 					{
