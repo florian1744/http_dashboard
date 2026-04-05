@@ -27,9 +27,16 @@ type DashboardData struct {
 
 func BuildDashboardData() (DashboardData, error) {
 	vmem, err := mem.VirtualMemory()
-	cpuInfo, err := cpu.Info()
-	hardDriveInfo, err := disk.Usage("/")
+	if err != nil {
+		return DashboardData{}, err
+	}
 
+	cpuInfo, err := cpu.Info()
+	if err != nil {
+		return DashboardData{}, err
+	}
+
+	hardDriveInfo, err := disk.Usage("/")
 	if err != nil {
 		return DashboardData{}, err
 	}

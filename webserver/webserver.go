@@ -3,6 +3,7 @@ package webserver
 import (
 	"encoding/json"
 	"html/template"
+	"log"
 	"net/http"
 
 	systemutil "example.com/http_dashboard/system_util"
@@ -31,5 +32,5 @@ func StartWebServer() {
 		w.Header().Set("content-type", "application/json")
 		json.NewEncoder(w).Encode(systemResources)
 	})
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
