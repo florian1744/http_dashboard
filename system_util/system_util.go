@@ -35,34 +35,34 @@ func BuildDashboardData() (DashboardData, error) {
 	}
 
 	data := DashboardData{
-		Title: "Systemressourcen",
+		Title: "Systemressources",
 		Sections: []MetricSection{
 			{
 				Name: "RAM",
 				Cards: []MetricData{
 					{
 						ID:    "ram-total",
-						Label: "Gesamtspeicher",
+						Label: "Total RAM",
 						Value: fmt.Sprintf("%d MB", convertByteToMB(int(vmem.Total))),
 						Color: "accent",
 					},
 					{
 						ID:    "ram-available",
-						Label: "Verfügbar",
+						Label: "RAM available",
 						Value: fmt.Sprintf("%d MB", convertByteToMB(int(vmem.Available))),
 						Color: "success",
 					},
 					{
 						ID:    "ram-used",
-						Label: "Belegt",
+						Label: "RAM used",
 						Value: fmt.Sprintf("%d MB", convertByteToMB(int(vmem.Used))),
 						Color: "warning",
 					},
 					{
 						ID:    "ram-used-percent",
-						Label: "Auslastung",
+						Label: "RAM used percent",
 						Value: fmt.Sprintf("%.2f %%", vmem.UsedPercent),
-						Color: "",
+						Color: "warning",
 					},
 				},
 			},
@@ -81,13 +81,13 @@ func BuildDashboardData() (DashboardData, error) {
 						ID:    "cpu-cores",
 						Label: "CPU cores",
 						Value: fmt.Sprintf("%v", cpuInfo[0].Cores),
-						Color: "",
+						Color: "accent",
 					},
 					{
 						ID:    "cpu-mhz",
 						Label: "CPU mhz",
 						Value: fmt.Sprintf("%v", cpuInfo[0].Mhz),
-						Color: "",
+						Color: "accent",
 					},
 				},
 			},
@@ -101,22 +101,22 @@ func BuildDashboardData() (DashboardData, error) {
 						Color: "",
 					},
 					{
+						ID:    "hardDrive-free",
+						Label: "Hard Drive available",
+						Value: fmt.Sprintf("%d MB", convertByteToMB(int(hardDriveInfo.Free))),
+						Color: "success",
+					},
+					{
 						ID:    "hardDrive-used",
 						Label: "Hard Drive used",
 						Value: fmt.Sprintf("%d MB", convertByteToMB(int(hardDriveInfo.Used))),
-						Color: "",
+						Color: "warning",
 					},
 					{
 						ID:    "hardDrive-used-percent",
 						Label: "Hard Drive percent used",
 						Value: fmt.Sprintf("%2.f%%", hardDriveInfo.UsedPercent),
 						Color: "warning",
-					},
-					{
-						ID:    "hardDrive-free",
-						Label: "Hard Drive free",
-						Value: fmt.Sprintf("%d MB", convertByteToMB(int(hardDriveInfo.Free))),
-						Color: "success",
 					},
 				},
 			},

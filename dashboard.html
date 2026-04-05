@@ -139,14 +139,16 @@
           const response = await fetch("/api/system");
           const data = await response.json();
 
-          for (const card of data.sections) {
-            const el = document.getElementById(card.id);
-            if (el) {
-              el.textContent = card.value;
+          for (const section of data.sections) {
+            for (const card of section.cards) {
+              const el = document.getElementById(card.id);
+              if (el) {
+                el.textContent = card.value;
+              }
             }
           }
         } catch (err) {
-          console.error("Fehler beim Laden:", err);
+          console.error("Error loading system data:", err);
         }
       }
       loadSystemData();
