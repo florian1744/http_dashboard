@@ -10,6 +10,7 @@ import (
 )
 
 func StartWebServer() {
+	tmpl := template.Must(template.ParseFiles("dashboard.html"))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		systemResources, err := systemutil.BuildDashboardData()
@@ -18,8 +19,9 @@ func StartWebServer() {
 			return
 		}
 
-		tmpl := template.Must(template.ParseFiles("dashboard.html"))
-		tmpl.Execute(w, systemResources)
+		if err := tmpl.Execute(w, systemResources); err != nil {
+			log.Println("template error:", err)
+		}
 	})
 
 	http.HandleFunc("/api/system", func(w http.ResponseWriter, r *http.Request) {
@@ -29,8 +31,10 @@ func StartWebServer() {
 			return
 		}
 
-		w.Header().Set("content-type", "application/json")
-		json.NewEncoder(w).Encode(systemResources)
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(systemResources); err != nil {
+			log.Println("json error", err)
+		}
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
